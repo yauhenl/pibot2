@@ -1,17 +1,23 @@
 package com.yauhenl.pibot;
 
-import com.yauhenl.pibot.web.BotController;
-import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
-import org.glassfish.jersey.server.ResourceConfig;
+import com.yauhenl.pibot.service.ActionHandler;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.reactive.function.server.RouterFunction;
+import org.springframework.web.reactive.function.server.ServerResponse;
 
-import javax.ws.rs.core.UriBuilder;
-import java.net.URI;
+import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
+import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
-// run with --add-modules java.activation,java.xml.bind
+@SpringBootApplication
 public class Application {
     public static void main(String[] args) {
-        URI baseUri = UriBuilder.fromUri("http://localhost/").port(8080).build();
-        ResourceConfig config = new ResourceConfig(BotController.class);
-        JdkHttpServerFactory.createHttpServer(baseUri, config);
+        SpringApplication.run(Application.class, args);
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> routes(ActionHandler actionHandler) {
+        return route(GET("/action/{actionType}"), actionHandler::performAction);
     }
 }

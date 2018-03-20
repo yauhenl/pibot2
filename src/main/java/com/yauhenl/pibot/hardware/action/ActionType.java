@@ -1,6 +1,6 @@
-package com.yauhenl.pibot.control.action;
+package com.yauhenl.pibot.hardware.action;
 
-import static com.yauhenl.pibot.control.action.Actions.*;
+import static com.yauhenl.pibot.hardware.action.Actions.*;
 
 public enum ActionType {
     // Power

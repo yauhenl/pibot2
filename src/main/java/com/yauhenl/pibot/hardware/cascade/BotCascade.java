@@ -1,7 +1,10 @@
 package com.yauhenl.pibot.hardware.cascade;
 
 import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioFactory;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -9,12 +12,15 @@ import static com.pi4j.io.gpio.PinState.LOW;
 import static com.pi4j.io.gpio.RaspiPin.*;
 import static com.yauhenl.pibot.hardware.cascade.MotorKey.*;
 
+@Service
 public class BotCascade {
 
     private Map<MotorKey, Motor> motors;
     private Shift shift;
 
-    public void initCascade(GpioController controller) {
+    @PostConstruct
+    public void initCascade() {
+        GpioController controller = GpioFactory.getInstance();
         motors = new EnumMap<>(MotorKey.class);
         motors.put(DC1, new Motor(controller.provisionDigitalOutputPin(GPIO_25, LOW)));
         motors.put(DC2, new Motor(controller.provisionDigitalOutputPin(GPIO_22, LOW)));

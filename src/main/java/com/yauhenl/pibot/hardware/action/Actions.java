@@ -1,4 +1,4 @@
-package com.yauhenl.pibot.control.action;
+package com.yauhenl.pibot.hardware.action;
 
 import com.yauhenl.pibot.hardware.cascade.Motor;
 

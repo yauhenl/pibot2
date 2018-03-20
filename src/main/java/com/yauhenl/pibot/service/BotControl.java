@@ -1,28 +1,22 @@
 package com.yauhenl.pibot.service;
 
-import com.pi4j.io.gpio.GpioFactory;
 import com.yauhenl.pibot.hardware.cascade.BotCascade;
 import com.yauhenl.pibot.hardware.cascade.Motor;
 import com.yauhenl.pibot.hardware.cascade.MotorKey;
 import com.yauhenl.pibot.hardware.cascade.Shift;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+@Service
 public class BotControl {
 
-    private BotCascade cascade;
-    private static BotControl botControl;
+    private final BotCascade cascade;
 
-    private BotControl() {
-        cascade = new BotCascade();
-        cascade.initCascade(GpioFactory.getInstance());
-    }
-
-    public static BotControl getInstance() {
-        if (botControl == null) {
-            botControl = new BotControl();
-        }
-        return botControl;
+    @Autowired
+    public BotControl(BotCascade cascade) {
+        this.cascade = cascade;
     }
 
     public Shift getShift() {
